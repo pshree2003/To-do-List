@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+    <div class="container">
+    <div class="box">
+    <h2>To-Do List</h2>
+    <input type="text" id="newItemInput" placeholder="Enter a new task.." required title="Please Enter Task to Continue">
+    <button id="button" onclick="addItem()">Add Task</button>
+    <ul id="todoList"></ul>
+</div>
+</div>
+    <script>
+        function addItem() {
+            const inputBox = document.getElementById("newItemInput");
+            const escapedInput = escapeHTML(inputBox.value);
+
+            if (escapedInput) {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `${escapedInput} <button id="lidelete" onclick="removeItem(this)">Delete</button>`;
+                listItem.addEventListener("click", () => toggleItemDone(listItem)); 
+                document.getElementById("todoList").appendChild(listItem);
+                inputBox.value = "";
+            }
+        }
+
+        function removeItem(itemButton) {
+            itemButton.parentNode.remove();
+        }
+
+        function toggleItemDone(listItem) {
+            listItem.classList.toggle("done");
+        }
+
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
